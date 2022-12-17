@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "oc-p12"
+version = "0.1.0"
+description = ""
+authors = ["Clement MARCEL <clmtmarcel@gmail.com>"]
+readme = "README.md"
+packages = [{include = "oc_p12"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.4"
+django-admin = "^2.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
