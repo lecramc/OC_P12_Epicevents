@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "oc-p12"
+name = "oc_p12_epicevents"
 version = "0.1.0"
 description = ""
 authors = ["Clement MARCEL <clmtmarcel@gmail.com>"]
-readme = "README.md"
-packages = [{include = "oc_p12"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-Django = "^4.1.4"
+python = "^3.11"
 django-admin = "^2.0.1"
+Django = "^4.1.5"
+psycopg2 = "^2.9.5"
 
+[tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
