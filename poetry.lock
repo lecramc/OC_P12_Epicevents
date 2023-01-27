@@ -71,6 +71,18 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "djangorestframework"
+version = "3.14.0"
+description = "Web APIs for Django, made easy."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=3.0"
+pytz = "*"
+
+[[package]]
 name = "psycopg2"
 version = "2.9.5"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -121,7 +133,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "505692e0836a118a942dba9e52a6bdefd5f13dffbe9b1578ead352cc85c55ee0"
+content-hash = "dcda12b8bb7168269bbf217fea7ba94855c5eb141cc321a6b4eb0753305638d7"
 
 [metadata.files]
 asgiref = []
@@ -130,6 +142,7 @@ django-admin = []
 django-excel-base = []
 django-excel-response2 = []
 django-six = []
+djangorestframework = []
 psycopg2 = []
 pytz = []
 screen = []
