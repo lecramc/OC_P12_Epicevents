@@ -1,22 +1,19 @@
-from rest_framework import serializers
-from .models import User, Client, Contract, Event
+from rest_framework.serializers import ModelSerializer
 
-class UserSerializer(serializers.Serializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+from .models import  Client, Contract, Event
 
-class ClientSerializer(serializers.Serializer):
+
+class ClientSerializer(ModelSerializer):
     class Meta:
         model = Client
         fields = "__all__"
 
-class ContractSerializer(serializers.Serializer):
+class ContractSerializer(ModelSerializer):
     class Meta:
         model = Contract
         fields = "__all__"
 
-class EventSerializer(serializers.Serializer):
+class EventSerializer(ModelSerializer):
     class Meta:
         model = Event
         fields = "__all__"
