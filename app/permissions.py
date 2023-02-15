@@ -61,7 +61,7 @@ class EventPermission(BasePermission):
             else:
                 return False
         elif user.type.title == "sales":
-            if view.action in ['create', 'list', 'retrieve']:
+            if view.action in ['create']:
                 return request.user.groups.filter(name='sales').exists()
             else:
                 return False
