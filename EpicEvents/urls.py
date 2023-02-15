@@ -26,6 +26,8 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/client/',ClientViewSet.as_view({'get': 'list'}), name="client"),
+    path(r"api/client/(?P<client_id>[^/.]+)/contracts", ContractViewSet.as_view({'get': 'list'}), name="client_contract"),
+    path(r"api/client/(?P<client_id>[^/.]+)/events", EventViewSet.as_view({'get': 'list'}), name="client_event"),
     path('api/contract/', ContractViewSet.as_view({'get': 'list'}), name="contract"),
     path('api/event/', EventViewSet.as_view({'get': 'list'}), name="event"),
 ]
