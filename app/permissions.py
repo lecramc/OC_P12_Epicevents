@@ -5,13 +5,10 @@ from .models import Client, Event, Contract, Employee
 
 class ClientPermission(BasePermission):
     def has_permission(self, request, view):
-        user = get_object_or_404(Employee, user=request.user)
-        if user.type.title == "manager":
-            if view.action in ['list', 'retrieve', 'create', 'update', 'destroy']:
-                return request.user.groups.filter(name='manager').exists()
-            else:
-                return False
-        elif user.type.title == "sales":
+        employee = get_object_or_404(Employee, user=request.user)
+        if employee.user.is_staff:
+            return True
+        elif employee.type.title == "sales":
             if view.action in ['list', 'retrieve', 'create']:
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
@@ -19,29 +16,20 @@ class ClientPermission(BasePermission):
                 return request.user.is_sales_contact(client)
             else:
                 return False
-        elif user.type.title == "support":
+        elif employee.type.title == "support":
             if view.action in ['list', 'retrieve']:
                 return request.user.groups.filter(name='support').exists()
             else:
                 return False
             
-    def has_object_permission(self, request, view, obj):
-        user = get_object_or_404(Employee, user=request.user)
-        if user.type.title == "support" and obj in Client.objects.filter(
-            events__support_contact=request.user
-        ):
-            return request.user.groups.filter(name='support').exists()
             
 class ContractPermission(BasePermission):
     def has_permission(self, request, view):
-        user = get_object_or_404(Employee, user=request.user)
-        if user.type.title == "manager":
-            if view.action in ['create', 'list', 'retrieve', 'update', 'destroy']:
-                return request.user.groups.filter(name='manager').exists()
-            else:
-                return False
+        employee = get_object_or_404(Employee, user=request.user)
+        if employee.user.is_staff:
+            return True
 
-        elif user.type.title == "sales":
+        elif employee.type.title == "sales":
             if view.action in ['create', 'list', 'retrieve']:
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
@@ -54,18 +42,15 @@ class ContractPermission(BasePermission):
  
 class EventPermission(BasePermission):
     def has_permission(self, request, view):
-        user = get_object_or_404(Employee, user=request.user)
-        if user.type.title == "manager":
-            if view.action in ['create', 'list', 'retrieve', 'update', 'destroy']:
-                return request.user.groups.filter(name='manager').exists()
-            else:
-                return False
-        elif user.type.title == "sales":
+        employee = get_object_or_404(Employee, user=request.user)
+        if employee.user.is_staff:
+            return True
+        elif employee.type.title == "sales":
             if view.action in ['create']:
                 return request.user.groups.filter(name='sales').exists()
             else:
                 return False
-        elif user.type.title == "support":
+        elif employee.type.title == "support":
             if view.action in ['list', 'retrieve']:
                 return request.user.groups.filter(name='support').exists()
             elif view.action in ['update']:
