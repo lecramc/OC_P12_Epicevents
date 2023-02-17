@@ -9,7 +9,7 @@ class ClientPermission(BasePermission):
         if employee.user.is_staff:
             return True
         elif employee.type.title == "sales":
-            if view.action in ['list', 'retrieve', 'create']:
+            if view.action in ['list', 'create']:
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
                 client = get_object_or_404(Client, pk=view.kwargs['pk'])
@@ -17,7 +17,7 @@ class ClientPermission(BasePermission):
             else:
                 return False
         elif employee.type.title == "support":
-            if view.action in ['list', 'retrieve']:
+            if view.action in ['list']:
                 return request.user.groups.filter(name='support').exists()
             else:
                 return False
@@ -28,9 +28,8 @@ class ContractPermission(BasePermission):
         employee = get_object_or_404(Employee, user=request.user)
         if employee.user.is_staff:
             return True
-
         elif employee.type.title == "sales":
-            if view.action in ['create', 'list', 'retrieve']:
+            if view.action in ['create', 'list']:
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
                 contract = get_object_or_404(Contract, pk=view.kwargs['pk'])
@@ -51,11 +50,11 @@ class EventPermission(BasePermission):
             else:
                 return False
         elif employee.type.title == "support":
-            if view.action in ['list', 'retrieve']:
+            if view.action in ['list']:
                 return request.user.groups.filter(name='support').exists()
             elif view.action in ['update']:
                 event = get_object_or_404(Event, pk=view.kwargs['pk'])
                 if event.event_date.date() > date.today():
-                    return request.user.is_support_contact(event)
+                    return request.user.pk == event.support_contact.pk
             else:
                 return False

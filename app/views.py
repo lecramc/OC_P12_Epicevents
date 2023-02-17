@@ -16,7 +16,9 @@ class ClientViewSet(viewsets.ModelViewSet):
             if self.request.user.groups.filter(name="support")
             else Client.objects.all()
         )
- 
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
 
 class ContractViewSet(viewsets.ModelViewSet):
     serializer_class = ContractSerializer
@@ -30,8 +32,12 @@ class ContractViewSet(viewsets.ModelViewSet):
             )
     
     def perform_create(self, serializer):
-        client = Client.objects.get(pk=self.kwargs['client_id'])
+        client = Client.objects.get(pk=self.request.POST['client'])
         serializer.save(sales_contact=self.request.user, client=client)
+
+    def update(self, request, *args, **kwargs):
+            kwargs['partial'] = True
+            return super().update(request, *args, **kwargs)
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes =  [EventPermission]
@@ -41,5 +47,9 @@ class EventViewSet(viewsets.ModelViewSet):
         return Event.objects.all()
     
     def perform_create(self, serializer):
-        client = get_object_or_404(Client, pk=self.kwargs['client_id'])
+        client = get_object_or_404(Client, pk=self.request.POST['client'])
         serializer.save(client=client)
+        
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
