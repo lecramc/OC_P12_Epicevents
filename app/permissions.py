@@ -13,7 +13,7 @@ class ClientPermission(BasePermission):
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
                 client = get_object_or_404(Client, pk=view.kwargs['pk'])
-                return request.user.is_sales_contact(client)
+                return request.user.pk == client.sales_contact.pk
             else:
                 return False
         elif employee.type.title == "support":
@@ -34,7 +34,7 @@ class ContractPermission(BasePermission):
             elif view.action in ['update']:
                 contract = get_object_or_404(Contract, pk=view.kwargs['pk'])
                 if not contract.status:
-                    return request.user.is_sales_contact(contract)
+                    return request.user.pk == contract.sales_contact.pk
             else:
                 return False    
        

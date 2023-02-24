@@ -12,7 +12,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     filterset_fields = ['lastname', 'email']
     def get_queryset(self):
         return (
-            Client.objects.filter(event__support_contact=self.request.user)
+            Client.objects.filter(event__support_contact=self.request.user).distinct()
             if self.request.user.groups.filter(name="support")
             else Client.objects.all()
         )
