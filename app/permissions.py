@@ -37,7 +37,11 @@ class ContractPermission(BasePermission):
                     return request.user.pk == contract.sales_contact.pk
             else:
                 return False    
-       
+        elif employee.type.title == "support":
+            if view.action in ['list']:
+                return request.user.groups.filter(name='support').exists()
+            else :
+                return False
  
 class EventPermission(BasePermission):
     def has_permission(self, request, view):

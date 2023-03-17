@@ -27,9 +27,7 @@ class ContractViewSet(viewsets.ModelViewSet):
     filterset_fields = ['client__lastname', 'client__email', "date_created", "payment_due"]
 
     def get_queryset(self):
-        return Contract.objects.filter(
-                sales_contact=self.request.user
-            )
+        return Contract.objects.filter(sales_contact=self.request.user) if self.request.user.groups.filter(name="sales") else Contract.objects.all()
     
     def perform_create(self, serializer):
         client = Client.objects.get(pk=self.request.POST['client'])
