@@ -45,7 +45,7 @@ class EventPermission(BasePermission):
         if employee.user.is_staff:
             return True
         elif employee.type.title == "sales":
-            if view.action in ['create']:
+            if view.action in ['create', 'list']:
                 return request.user.groups.filter(name='sales').exists()
             else:
                 return False
