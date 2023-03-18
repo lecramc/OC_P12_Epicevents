@@ -9,7 +9,7 @@ class ClientPermission(BasePermission):
         if employee.user.is_staff:
             return True
         elif employee.type.title == "sales":
-            if view.action in ['list', 'create']:
+            if view.action in ['list']:
                 return request.user.groups.filter(name='sales').exists()
             elif view.action in ['update']:
                 client = get_object_or_404(Client, pk=view.kwargs['pk'])
